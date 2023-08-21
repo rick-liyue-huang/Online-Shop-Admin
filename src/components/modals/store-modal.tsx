@@ -37,7 +37,7 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
 
     try {
       setLoading(true);
