@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import { ModalProvider } from '@/providers/modalProvider';
+import prismaDB from '../lib/prisma-db';
 
 const inter = Inter({ subsets: ['latin'] });
 
