@@ -1,6 +1,6 @@
 'use client';
 
-import { BillBoard } from '@prisma/client';
+import { Billboard } from '@prisma/client';
 import React, { useState } from 'react';
 
 import { Button } from '../ui/button';
@@ -26,7 +26,7 @@ import BillBoardFormHeading from './BillBoardFormHeading';
 import ImageUpload from '@/components/ImageUpload';
 
 interface Props {
-  initialData: BillBoard | null;
+  initialData: Billboard | null;
 }
 
 const formSchema = z.object({
@@ -34,7 +34,7 @@ const formSchema = z.object({
   imageUrl: z.string().min(3),
 });
 
-type SettingsFormValues = z.infer<typeof formSchema>;
+type BillboardFormValues = z.infer<typeof formSchema>;
 
 export default function BillBoardForm({ initialData }: Props) {
   const [open, setOpen] = useState(false);
@@ -51,7 +51,7 @@ export default function BillBoardForm({ initialData }: Props) {
   const toastMsg = initialData ? 'Updated Billboard' : 'Created Billboard';
   const action = initialData ? 'Update' : 'Create';
 
-  const form = useForm<SettingsFormValues>({
+  const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData ?? {
       label: '',
@@ -59,7 +59,7 @@ export default function BillBoardForm({ initialData }: Props) {
     },
   });
 
-  const onSubmit = async (data: SettingsFormValues) => {
+  const onSubmit = async (data: BillboardFormValues) => {
     console.log(data);
 
     try {
