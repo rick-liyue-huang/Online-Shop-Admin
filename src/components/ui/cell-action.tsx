@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BillboardColumn } from '@/components/ui/columns';
+import { BillboardColumn, CategoryColumn } from '@/components/ui/columns';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,11 +16,15 @@ import { useParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import AlertModal from '@/components/modals/alert-modal';
 
-interface Props {
+interface BillboardProps {
   data: BillboardColumn;
 }
 
-export default function CellAction({ data }: Props) {
+interface CategoryProps {
+  data: CategoryColumn;
+}
+
+export function BillBoardCellAction({ data }: BillboardProps) {
   const { toast } = useToast();
   const router = useRouter();
   const params = useParams();
@@ -77,6 +81,78 @@ export default function CellAction({ data }: Props) {
           <DropdownMenuItem
             onClick={() =>
               router.push(`/${params.storeId}/billboards/${data.id}`)
+            }
+          >
+            <Edit className="w-4 h-4 mr-2" />
+            Update
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <Trash className="w-4 h-4 mr-2" />
+            Remove
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+}
+
+export function CategoryCellAction({ data }: CategoryProps) {
+  const { toast } = useToast();
+  const router = useRouter();
+  const params = useParams();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast({
+      title: 'Id copied to clipboard',
+    });
+  };
+
+  const handleCategoryDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
+      router.refresh();
+      toast({
+        title: 'Delete Category Successfully',
+      });
+    } catch (err) {
+      toast({
+        title:
+          'Something went wrong while deleting the category. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={handleCategoryDelete}
+        loading={loading}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant={'secondary'} className="w-8 h-8 p-0">
+            <span className="sr-only">Open Menu</span>
+            <MoreHorizontal className="w-4 h-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => handleCopy(data.id)}>
+            <Copy className="w-4 h-4 mr-2" />
+            Copy Id
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              router.push(`/${params.storeId}/categories/${data.id}`)
             }
           >
             <Edit className="w-4 h-4 mr-2" />

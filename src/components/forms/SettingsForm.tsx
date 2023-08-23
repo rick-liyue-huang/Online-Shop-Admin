@@ -24,6 +24,7 @@ import { useParams, useRouter } from 'next/navigation';
 import AlertModal from '@/components/modals/alert-modal';
 import ApiTable from '@/components/ApiTable';
 import { useOrigin } from '@/hooks/use-origin';
+import { ToastAction } from '@/components/ui/toast';
 
 interface Props {
   initialData: Store;
@@ -83,6 +84,7 @@ export default function SettingsForm({ initialData }: Props) {
         title:
           'Make sure you will delete all the products and categories first',
         variant: 'destructive',
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
     } finally {
       setLoading(false);

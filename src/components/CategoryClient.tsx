@@ -6,15 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
 import BillBoardFormHeading from '@/components/forms/BillBoardFormHeading';
-import { BillboardColumn, billboardColumns } from '@/components/ui/columns';
+import { CategoryColumn, categoryColumns } from '@/components/ui/columns';
 import { DataTable } from '@/components/ui/data-table';
 import ApiList from '@/components/ApiList';
 
 interface Props {
-  data: BillboardColumn[];
+  data: CategoryColumn[];
 }
 
-export default function BillBoardClient({ data }: Props) {
+export default function CategoryClient({ data }: Props) {
   const router = useRouter();
   const params = useParams();
 
@@ -22,12 +22,12 @@ export default function BillBoardClient({ data }: Props) {
     <>
       <div className="flex items-center justify-between">
         <BillBoardFormHeading
-          title={`Billboards (${data.length})`}
-          description="manage billboards for your store"
+          title={`Category (${data.length})`}
+          description="manage category for your store"
         />
         <Button
           variant={'outline'}
-          onClick={() => router.push(`/${params.storeId}/billboards/new`)}
+          onClick={() => router.push(`/${params.storeId}/categories/new`)}
         >
           <Plus className="w-4 h-4 mr-2" />
           Add New
@@ -35,11 +35,11 @@ export default function BillBoardClient({ data }: Props) {
       </div>
       <Separator />
 
-      <DataTable columns={billboardColumns} data={data} searchKey="label" />
+      <DataTable columns={categoryColumns} data={data} searchKey="name" />
 
       <BillBoardFormHeading title="API" description="API desc" />
       <Separator />
-      <ApiList entityName="billboards" entityIdName="billboardId" />
+      <ApiList entityName="categories" entityIdName="categoryId" />
     </>
   );
 }
