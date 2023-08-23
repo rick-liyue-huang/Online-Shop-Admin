@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import {
   BillboardColumn,
   CategoryColumn,
+  ColorColumn,
   SizeColumn,
 } from '@/components/ui/columns';
 import {
@@ -30,6 +31,10 @@ interface CategoryProps {
 
 interface SizeProps {
   data: SizeColumn;
+}
+
+interface ColorProps {
+  data: ColorColumn;
 }
 
 export function BillBoardCellAction({ data }: BillboardProps) {
@@ -232,6 +237,76 @@ export function SizeCellAction({ data }: SizeProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}
+          >
+            <Edit className="w-4 h-4 mr-2" />
+            Update
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <Trash className="w-4 h-4 mr-2" />
+            Remove
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+}
+
+export function ColorCellAction({ data }: SizeProps) {
+  const { toast } = useToast();
+  const router = useRouter();
+  const params = useParams();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast({
+      title: 'Id copied to clipboard',
+    });
+  };
+
+  const handleColorDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+      router.refresh();
+      toast({
+        title: 'Delete Color Successfully',
+      });
+    } catch (err) {
+      toast({
+        title:
+          'Something went wrong while deleting the color. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={handleColorDelete}
+        loading={loading}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant={'secondary'} className="w-8 h-8 p-0">
+            <span className="sr-only">Open Menu</span>
+            <MoreHorizontal className="w-4 h-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => handleCopy(data.id)}>
+            <Copy className="w-4 h-4 mr-2" />
+            Copy Id
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
           >
             <Edit className="w-4 h-4 mr-2" />
             Update

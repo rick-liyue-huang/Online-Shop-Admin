@@ -1,6 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { ColorCellAction } from './cell-action';
 import {
   BillBoardCellAction,
   CategoryCellAction,
@@ -23,6 +24,13 @@ export type CategoryColumn = {
 };
 
 export type SizeColumn = {
+  id: string;
+  name: string;
+  value: string;
+  createdAt: string;
+};
+
+export type ColorColumn = {
   id: string;
   name: string;
   value: string;
@@ -80,5 +88,33 @@ export const sizeColumns: ColumnDef<SizeColumn>[] = [
   {
     id: 'actions',
     cell: ({ row }) => <SizeCellAction data={row.original} />,
+  },
+];
+
+export const colorColumns: ColumnDef<ColorColumn>[] = [
+  {
+    accessorKey: 'name',
+    header: 'Name',
+  },
+  {
+    accessorKey: 'value',
+    header: 'Value',
+    cell: ({ row }) => (
+      <div className="flex items-center gap-x-2">
+        {row.original.value}
+        <div
+          className="w-6 h-6 rounded-full border"
+          style={{ backgroundColor: row.original.value }}
+        />
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'Date',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <ColorCellAction data={row.original} />,
   },
 ];

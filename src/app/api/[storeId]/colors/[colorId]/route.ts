@@ -8,24 +8,24 @@ export async function GET(
     params,
   }: {
     params: {
-      sizeId: string;
+      colorId: string;
     };
   }
 ) {
   try {
-    if (!params.sizeId) {
-      return new NextResponse('Size id is required', { status: 400 });
+    if (!params.colorId) {
+      return new NextResponse('Color id is required', { status: 400 });
     }
 
-    const size = await prismaDB.size.findUnique({
+    const color = await prismaDB.color.findUnique({
       where: {
-        id: params.sizeId,
+        id: params.colorId,
       },
     });
 
-    return NextResponse.json(size);
+    return NextResponse.json(color);
   } catch (err) {
-    console.log('[Size_GET]', err);
+    console.log('[COLOR_GET]', err);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
@@ -37,7 +37,7 @@ export async function PATCH(
   }: {
     params: {
       storeId: string;
-      sizeId: string;
+      colorId: string;
     };
   }
 ) {
@@ -58,8 +58,8 @@ export async function PATCH(
       return new NextResponse('Value is required', { status: 400 });
     }
 
-    if (!params.sizeId) {
-      return new NextResponse('Size id is required', { status: 400 });
+    if (!params.colorId) {
+      return new NextResponse('Color id is required', { status: 400 });
     }
 
     const storeByUserId = await prismaDB.store.findFirst({
@@ -73,9 +73,9 @@ export async function PATCH(
       return new NextResponse('Unauthorized', { status: 403 }); // no permission
     }
 
-    const size = await prismaDB.size.updateMany({
+    const color = await prismaDB.color.updateMany({
       where: {
-        id: params.sizeId,
+        id: params.colorId,
       },
       data: {
         name,
@@ -83,9 +83,9 @@ export async function PATCH(
       },
     });
 
-    return NextResponse.json(size);
+    return NextResponse.json(color);
   } catch (err) {
-    console.log('[Size_PATCH]', err);
+    console.log('[COLOR_PATCH]', err);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
@@ -97,7 +97,7 @@ export async function DELETE(
   }: {
     params: {
       storeId: string;
-      sizeId: string;
+      colorId: string;
     };
   }
 ) {
@@ -108,8 +108,8 @@ export async function DELETE(
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    if (!params.sizeId) {
-      return new NextResponse('Size id is required', { status: 400 });
+    if (!params.colorId) {
+      return new NextResponse('Color id is required', { status: 400 });
     }
 
     const storeByUserId = await prismaDB.store.findFirst({
@@ -123,15 +123,15 @@ export async function DELETE(
       return new NextResponse('Unauthorized', { status: 403 }); // no permission
     }
 
-    const size = await prismaDB.size.deleteMany({
+    const color = await prismaDB.color.deleteMany({
       where: {
-        id: params.sizeId,
+        id: params.colorId,
       },
     });
 
-    return NextResponse.json(size);
+    return NextResponse.json(color);
   } catch (err) {
-    console.log('[SIZE_DELETE]', err);
+    console.log('[COLOR DELETE]', err);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
