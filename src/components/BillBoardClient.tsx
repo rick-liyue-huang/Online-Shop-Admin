@@ -6,8 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
 import BillBoardFormHeading from '@/components/forms/BillBoardFormHeading';
+import { BillboardColumn, columns } from '@/components/ui/columns';
+import { DataTable } from '@/components/ui/data-table';
+import ApiList from '@/components/ApiList';
 
-export default function BillBoardClient() {
+interface Props {
+  data: BillboardColumn[];
+}
+
+export default function BillBoardClient({ data }: Props) {
   const router = useRouter();
   const params = useParams();
 
@@ -15,7 +22,7 @@ export default function BillBoardClient() {
     <>
       <div className="flex items-center justify-between">
         <BillBoardFormHeading
-          title="BillBoards (0)"
+          title={`Billboards (${data.length})`}
           description="manage billboards for your store"
         />
         <Button
@@ -27,6 +34,12 @@ export default function BillBoardClient() {
         </Button>
       </div>
       <Separator />
+
+      <DataTable columns={columns} data={data} searchKey="label" />
+
+      <BillBoardFormHeading title="API" description="API desc" />
+      <Separator />
+      <ApiList entityName="billboards" entityIdName="billboardId" />
     </>
   );
 }
