@@ -5,7 +5,7 @@ interface Props {
   description: string;
 }
 
-export default function BillBoardFormHeading({ title, description }: Props) {
+export default function FormHeading({ title, description }: Props) {
   return (
     <div>
       <h2 className="text-3xl font-bold tracking-tight">{title}</h2>

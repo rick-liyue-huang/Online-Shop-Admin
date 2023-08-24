@@ -2,7 +2,6 @@
 
 import { Store } from '@prisma/client';
 import React, { useState } from 'react';
-import SettingFormHeading from '@/components/forms/SettingFormHeading';
 import { Button } from '../ui/button';
 import { Trash } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -25,6 +24,7 @@ import AlertModal from '@/components/modals/alert-modal';
 import ApiTable from '@/components/ApiTable';
 import { useOrigin } from '@/hooks/use-origin';
 import { ToastAction } from '@/components/ui/toast';
+import FormHeading from '@/components/forms/FormHeading';
 
 interface Props {
   initialData: Store;
@@ -100,10 +100,7 @@ export default function SettingsForm({ initialData }: Props) {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <SettingFormHeading
-          title={'Setting'}
-          description="Manage Store preferences"
-        />
+        <FormHeading title={'Setting'} description="Manage Store preferences" />
         <Button
           disabled={loading}
           variant={'destructive'}

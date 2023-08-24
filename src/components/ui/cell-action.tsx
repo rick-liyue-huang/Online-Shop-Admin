@@ -5,6 +5,7 @@ import {
   BillboardColumn,
   CategoryColumn,
   ColorColumn,
+  ProductColumn,
   SizeColumn,
 } from '@/components/ui/columns';
 import {
@@ -35,6 +36,10 @@ interface SizeProps {
 
 interface ColorProps {
   data: ColorColumn;
+}
+
+interface ProductProps {
+  data: ProductColumn;
 }
 
 export function BillBoardCellAction({ data }: BillboardProps) {
@@ -251,7 +256,7 @@ export function SizeCellAction({ data }: SizeProps) {
   );
 }
 
-export function ColorCellAction({ data }: SizeProps) {
+export function ColorCellAction({ data }: ColorProps) {
   const { toast } = useToast();
   const router = useRouter();
   const params = useParams();
@@ -307,6 +312,78 @@ export function ColorCellAction({ data }: SizeProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
+          >
+            <Edit className="w-4 h-4 mr-2" />
+            Update
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <Trash className="w-4 h-4 mr-2" />
+            Remove
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
+  );
+}
+
+export function ProductCellAction({ data }: ProductProps) {
+  const { toast } = useToast();
+  const router = useRouter();
+  const params = useParams();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast({
+      title: 'Id copied to clipboard',
+    });
+  };
+
+  const handleProductDelete = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/${params.storeId}/products/${data.id}`);
+      router.refresh();
+      toast({
+        title: 'Delete Product Successfully',
+      });
+    } catch (err) {
+      toast({
+        title:
+          'Something went wrong while deleting the product. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={handleProductDelete}
+        loading={loading}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant={'secondary'} className="w-8 h-8 p-0">
+            <span className="sr-only">Open Menu</span>
+            <MoreHorizontal className="w-4 h-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => handleCopy(data.id)}>
+            <Copy className="w-4 h-4 mr-2" />
+            Copy Id
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              router.push(`/${params.storeId}/products/${data.id}`)
+            }
           >
             <Edit className="w-4 h-4 mr-2" />
             Update

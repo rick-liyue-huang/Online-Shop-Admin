@@ -22,8 +22,7 @@ import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import AlertModal from '@/components/modals/alert-modal';
-import BillBoardFormHeading from './BillBoardFormHeading';
-import ImageUpload from '@/components/ImageUpload';
+import FormHeading from './FormHeading';
 
 interface Props {
   initialData: Size | null;
@@ -115,7 +114,7 @@ export default function SizeForm({ initialData }: Props) {
         loading={loading}
       />
       <div className="flex items-center justify-between">
-        <BillBoardFormHeading title={title} description={description} />
+        <FormHeading title={title} description={description} />
         {initialData && (
           <Button
             disabled={loading}

@@ -1,9 +1,9 @@
-import BillBoardClient from '@/components/BillBoardClient';
+import BillBoardClient from '@/components/clients/BillBoardClient';
 import { CategoryColumn } from '@/components/ui/columns';
 import prismaDB from '@/lib/prisma-db';
 import React from 'react';
 import { format } from 'date-fns';
-import CategoryClient from '@/components/CategoryClient';
+import CategoryClient from '@/components/clients/CategoryClient';
 
 export default async function CategoriesPage({
   params,

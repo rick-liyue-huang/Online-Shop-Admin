@@ -5,16 +5,21 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
-import BillBoardFormHeading from '@/components/forms/BillBoardFormHeading';
-import { ColorColumn, colorColumns } from '@/components/ui/columns';
+import BillBoardFormHeading from '@/components/forms/FormHeading';
+import {
+  BillboardColumn,
+  ProductColumn,
+  billboardColumns,
+  productColumns,
+} from '@/components/ui/columns';
 import { DataTable } from '@/components/ui/data-table';
 import ApiList from '@/components/ApiList';
 
 interface Props {
-  data: ColorColumn[];
+  data: ProductColumn[];
 }
 
-export default function ColorClient({ data }: Props) {
+export default function ProductClient({ data }: Props) {
   const router = useRouter();
   const params = useParams();
 
@@ -22,12 +27,12 @@ export default function ColorClient({ data }: Props) {
     <>
       <div className="flex items-center justify-between">
         <BillBoardFormHeading
-          title={`Color (${data.length})`}
-          description="manage color for your store"
+          title={`Products (${data.length})`}
+          description="manage products for your store"
         />
         <Button
           variant={'outline'}
-          onClick={() => router.push(`/${params.storeId}/colors/new`)}
+          onClick={() => router.push(`/${params.storeId}/products/new`)}
         >
           <Plus className="w-4 h-4 mr-2" />
           Add New
@@ -35,11 +40,11 @@ export default function ColorClient({ data }: Props) {
       </div>
       <Separator />
 
-      <DataTable columns={colorColumns} data={data} searchKey="name" />
+      <DataTable columns={productColumns} data={data} searchKey="name" />
 
       <BillBoardFormHeading title="API" description="API desc" />
       <Separator />
-      <ApiList entityName="colors" entityIdName="colorId" />
+      <ApiList entityName="products" entityIdName="productId" />
     </>
   );
 }

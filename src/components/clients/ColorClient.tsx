@@ -5,16 +5,16 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
-import BillBoardFormHeading from '@/components/forms/BillBoardFormHeading';
-import { CategoryColumn, categoryColumns } from '@/components/ui/columns';
+import BillBoardFormHeading from '@/components/forms/FormHeading';
+import { ColorColumn, colorColumns } from '@/components/ui/columns';
 import { DataTable } from '@/components/ui/data-table';
 import ApiList from '@/components/ApiList';
 
 interface Props {
-  data: CategoryColumn[];
+  data: ColorColumn[];
 }
 
-export default function CategoryClient({ data }: Props) {
+export default function ColorClient({ data }: Props) {
   const router = useRouter();
   const params = useParams();
 
@@ -22,12 +22,12 @@ export default function CategoryClient({ data }: Props) {
     <>
       <div className="flex items-center justify-between">
         <BillBoardFormHeading
-          title={`Category (${data.length})`}
-          description="manage category for your store"
+          title={`Color (${data.length})`}
+          description="manage color for your store"
         />
         <Button
           variant={'outline'}
-          onClick={() => router.push(`/${params.storeId}/categories/new`)}
+          onClick={() => router.push(`/${params.storeId}/colors/new`)}
         >
           <Plus className="w-4 h-4 mr-2" />
           Add New
@@ -35,11 +35,11 @@ export default function CategoryClient({ data }: Props) {
       </div>
       <Separator />
 
-      <DataTable columns={categoryColumns} data={data} searchKey="name" />
+      <DataTable columns={colorColumns} data={data} searchKey="name" />
 
       <BillBoardFormHeading title="API" description="API desc" />
       <Separator />
-      <ApiList entityName="categories" entityIdName="categoryId" />
+      <ApiList entityName="colors" entityIdName="colorId" />
     </>
   );
 }

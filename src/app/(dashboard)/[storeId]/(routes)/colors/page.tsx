@@ -2,7 +2,7 @@ import { ColorColumn } from '@/components/ui/columns';
 import prismaDB from '@/lib/prisma-db';
 import React from 'react';
 import { format } from 'date-fns';
-import ColorClient from '@/components/ColorClient';
+import ColorClient from '@/components/clients/ColorClient';
 
 export default async function ColorsPage({
   params,

@@ -2,7 +2,7 @@ import { SizeColumn } from '@/components/ui/columns';
 import prismaDB from '@/lib/prisma-db';
 import React from 'react';
 import { format } from 'date-fns';
-import SizeClient from '@/components/SizeClient';
+import SizeClient from '@/components/clients/SizeClient';
 
 export default async function SizesPage({
   params,

@@ -1,4 +1,4 @@
-import BillBoardClient from '@/components/BillBoardClient';
+import BillBoardClient from '@/components/clients/BillBoardClient';
 import { BillboardColumn } from '@/components/ui/columns';
 import prismaDB from '@/lib/prisma-db';
 import React from 'react';
