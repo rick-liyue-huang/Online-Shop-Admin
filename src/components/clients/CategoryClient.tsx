@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
-import BillBoardFormHeading from '@/components/forms/FormHeading';
+import FormHeading from '@/components/forms/FormHeading';
 import { CategoryColumn, categoryColumns } from '@/components/ui/columns';
 import { DataTable } from '@/components/ui/data-table';
 import ApiList from '@/components/ApiList';
@@ -21,7 +21,7 @@ export default function CategoryClient({ data }: Props) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <BillBoardFormHeading
+        <FormHeading
           title={`Category (${data.length})`}
           description="manage category for your store"
         />
@@ -37,7 +37,7 @@ export default function CategoryClient({ data }: Props) {
 
       <DataTable columns={categoryColumns} data={data} searchKey="name" />
 
-      <BillBoardFormHeading title="API" description="API desc" />
+      <FormHeading title="API" description="API desc" />
       <Separator />
       <ApiList entityName="categories" entityIdName="categoryId" />
     </>

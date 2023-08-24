@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
-import BillBoardFormHeading from '@/components/forms/FormHeading';
+import FormHeading from '@/components/forms/FormHeading';
 import {
   BillboardColumn,
   ProductColumn,
@@ -26,7 +26,7 @@ export default function ProductClient({ data }: Props) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <BillBoardFormHeading
+        <FormHeading
           title={`Products (${data.length})`}
           description="manage products for your store"
         />
@@ -42,7 +42,7 @@ export default function ProductClient({ data }: Props) {
 
       <DataTable columns={productColumns} data={data} searchKey="name" />
 
-      <BillBoardFormHeading title="API" description="API desc" />
+      <FormHeading title="API" description="API desc" />
       <Separator />
       <ApiList entityName="products" entityIdName="productId" />
     </>

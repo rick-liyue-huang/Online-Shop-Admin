@@ -1,6 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
+import { create } from 'zustand';
 import {
   ColorCellAction,
   ProductCellAction,
@@ -47,6 +48,16 @@ export type ProductColumn = {
   category: string;
   isFeatured: boolean;
   isArchived: boolean;
+  createdAt: string;
+};
+
+export type OrderColumn = {
+  id: string;
+  phone: string;
+  address: string;
+  isPaid: boolean;
+  totalPrice: string;
+  products: string;
   createdAt: string;
 };
 
@@ -177,5 +188,28 @@ export const productColumns: ColumnDef<ProductColumn>[] = [
   {
     id: 'actions',
     cell: ({ row }) => <ProductCellAction data={row.original} />,
+  },
+];
+
+export const orderColumns: ColumnDef<OrderColumn>[] = [
+  {
+    accessorKey: 'phone',
+    header: 'Phone',
+  },
+  {
+    accessorKey: 'address',
+    header: 'Address',
+  },
+  {
+    accessorKey: 'products',
+    header: 'Products',
+  },
+  {
+    accessorKey: 'totalPrice',
+    header: 'Total Price',
+  },
+  {
+    accessorKey: 'isPaid',
+    header: 'Paid',
   },
 ];

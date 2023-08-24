@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useParams, useRouter } from 'next/navigation';
-import BillBoardFormHeading from '@/components/forms/FormHeading';
+import FormHeading from '@/components/forms/FormHeading';
 import { BillboardColumn, billboardColumns } from '@/components/ui/columns';
 import { DataTable } from '@/components/ui/data-table';
 import ApiList from '@/components/ApiList';
@@ -21,7 +21,7 @@ export default function BillBoardClient({ data }: Props) {
   return (
     <>
       <div className="flex items-center justify-between">
-        <BillBoardFormHeading
+        <FormHeading
           title={`Billboards (${data.length})`}
           description="manage billboards for your store"
         />
@@ -37,7 +37,7 @@ export default function BillBoardClient({ data }: Props) {
 
       <DataTable columns={billboardColumns} data={data} searchKey="label" />
 
-      <BillBoardFormHeading title="API" description="API desc" />
+      <FormHeading title="API" description="API desc" />
       <Separator />
       <ApiList entityName="billboards" entityIdName="billboardId" />
     </>
